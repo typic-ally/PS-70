@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>PS70: Intro to Digital Fabrication </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../style.css" rel="stylesheet">
+
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div style="align-items: left; justify-content:left;" class="container-fluid">
+    <h3 class="nav-title"> PS70: Intro to Digital Fabrication</h3>
+    <div class="navbar-nav">
+      <h4></h4>
+      <h4><a class="nav-link" href="../index.html">Home</a></h4>
+      <h4><a class="nav-link" href="../about.html">About</a></h4>
+    </div>
+  </div>
+</nav>
+
+<body>
+
+
+<xmp style="display:none;">
+<br> 
+
+#### Week 4 - Microcontroller Programming
+By: Allison Fairman
+
+For my Microcontroller Programming pr oject, I tried 2 different codes.
+
+The first code I used is: 
+
+const int A1A = 3;  // define pin 3 for A-1A 
+const int A1B = 4;  // define pin 4 for A-1B 
+
+void setup() {
+  pinMode(A1A, OUTPUT);     // specify these pins as outputs
+  pinMode(A1B, OUTPUT);
+  digitalWrite(A1A, LOW);   // start with the motors off 
+  digitalWrite(A1B, LOW);
+}
+
+void loop() {
+  // start the motor 
+  digitalWrite(A1A, HIGH);   
+  digitalWrite(A1B, LOW);
+  delay(4000);              // allow the motor to run for 4 seconds
+
+  // stop the motor
+  digitalWrite(A1A, LOW);   // setting both pins LOW stops the motor 
+  digitalWrite(A1B, LOW);   // redundant, but doesn't hurt 
+  delay(2000);              // keep the motor off for 2 seconds
+
+}
+
+This code starts the motor for 4 seconds, then keeps it off for 2 seconds.
+
+
+The second code I used is:
+
+
+const int A1A = 3;  // define pin 3 for A-1A (speed)
+const int A1B = 4;  // define pin 4 for A-1B (direction)
+
+void setup() {
+  pinMode(A1A, OUTPUT);     // specify these pins as outputs
+  pinMode(A1B, OUTPUT);
+  digitalWrite(A1A, LOW);   // start with the motors off 
+  digitalWrite(A1B, LOW);
+}
+
+void loop() {
+  // start the motor 
+  digitalWrite(A1A, HIGH);   
+  digitalWrite(A1B, LOW);
+  delay(4000);              // allow the motor to run for 4 seconds
+
+  // stop the motor
+  digitalWrite(A1A, LOW);   // setting both pins LOW stops the motor
+  digitalWrite(A1B, LOW);
+  delay(2000);              // keep the motor off for 2 seconds
+
+  // start the motor in opposite direction
+  digitalWrite(A1A, LOW);  // A1A needs to be LOW to switch direction
+  digitalWrite(A1B, HIGH);  
+  delay(4000);              // allow the motor to run for 4 seconds
+
+  // stop the motor
+  digitalWrite(A1A, LOW);   // setting both pins LOW stops the motor
+  digitalWrite(A1B, LOW);
+  delay(2000);   
+
+}
+
+This code starts the motorfor 4 seconds, stops it for 2, then starts it again turning the opposite direction for  4 seconds, and stops for 2, repeating the same cycle.
+
+
+</xmp>
+</body>
+
+<script src="../strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+</html>
