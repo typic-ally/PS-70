@@ -26,74 +26,26 @@
 #### Week 4 - Microcontroller Programming
 By: Allison Fairman
 
-For my Microcontroller Programming pr oject, I tried 2 different codes.
+For my microcontroller programming project, I used the motor from my kinetic sculpture and programmed it to start with the push of a button.  I started off by connecting the left wire (black wire) to the ESP32-S2 board's gnd (ground) and positioned the button anywhere on the breadboard. 
 
-The first code I used is: 
+<img src="Screenshot 2023-07-22 151426.png" width="876" height="1093">
 
-const int A1A = 3;  // define pin 3 for A-1A 
-const int A1B = 4;  // define pin 4 for A-1B 
+Then I connected the right wire (red wire) to next the top leg of the button. 
 
-void setup() {
-  pinMode(A1A, OUTPUT);     // specify these pins as outputs
-  pinMode(A1B, OUTPUT);
-  digitalWrite(A1A, LOW);   // start with the motors off 
-  digitalWrite(A1B, LOW);
-}
-
-void loop() {
-  // start the motor 
-  digitalWrite(A1A, HIGH);   
-  digitalWrite(A1B, LOW);
-  delay(4000);              // allow the motor to run for 4 seconds
-
-  // stop the motor
-  digitalWrite(A1A, LOW);   // setting both pins LOW stops the motor 
-  digitalWrite(A1B, LOW);   // redundant, but doesn't hurt 
-  delay(2000);              // keep the motor off for 2 seconds
-
-}
-
-This code starts the motor for 4 seconds, then keeps it off for 2 seconds.
+<img src="Screenshot 2023-07-22 151412.png" width="876" height="1233">
 
 
-The second code I used is:
+<img src="Screenshot 2023-07-22 151431.png" width="876" height="1142">
 
+After that, I connected a double-sided wire next to the bottom leg of the button and wired the other side into 5V.
 
-const int A1A = 3;  // define pin 3 for A-1A (speed)
-const int A1B = 4;  // define pin 4 for A-1B (direction)
+<img src="Screenshot 2023-07-22 151419.png" width="876" height="1231">
 
-void setup() {
-  pinMode(A1A, OUTPUT);     // specify these pins as outputs
-  pinMode(A1B, OUTPUT);
-  digitalWrite(A1A, LOW);   // start with the motors off 
-  digitalWrite(A1B, LOW);
-}
+Here is the finishing product!
 
-void loop() {
-  // start the motor 
-  digitalWrite(A1A, HIGH);   
-  digitalWrite(A1B, LOW);
-  delay(4000);              // allow the motor to run for 4 seconds
-
-  // stop the motor
-  digitalWrite(A1A, LOW);   // setting both pins LOW stops the motor
-  digitalWrite(A1B, LOW);
-  delay(2000);              // keep the motor off for 2 seconds
-
-  // start the motor in opposite direction
-  digitalWrite(A1A, LOW);  // A1A needs to be LOW to switch direction
-  digitalWrite(A1B, HIGH);  
-  delay(4000);              // allow the motor to run for 4 seconds
-
-  // stop the motor
-  digitalWrite(A1A, LOW);   // setting both pins LOW stops the motor
-  digitalWrite(A1B, LOW);
-  delay(2000);   
-
-}
-
-This code starts the motorfor 4 seconds, stops it for 2, then starts it again turning the opposite direction for  4 seconds, and stops for 2, repeating the same cycle.
-
+<video width="720" height="520" controls>
+  <source src="IMG_0910.mov" type="video/mp4">
+  </video>
 
 </xmp>
 </body>

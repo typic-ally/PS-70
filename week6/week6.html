@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>PS70: Intro to Digital Fabrication </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../style.css" rel="stylesheet">
+
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div style="align-items: left; justify-content:left;" class="container-fluid">
+    <h3 class="nav-title"> PS70: Intro to Digital Fabrication</h3>
+    <div class="navbar-nav">
+      <h4></h4>
+      <h4><a class="nav-link" href="../index.html">Home</a></h4>
+      <h4><a class="nav-link" href="../about.html">About</a></h4>
+    </div>
+  </div>
+</nav>
+
+<body>
+
+
+<xmp style="display:none;">
+<br> 
+
+#### Week 6 - Electronic Input Devices
+By: Allison Fairman
+
+For my input device, I chose a capacitive moisture sensor. This is going to be a process in my final project, because the concept involves using a device that can determine the moisture level of a plant's soil, then distribute the correct amount of water that is needed.
+
+<img src="Screenshot 2023-07-16 211955.png" width="556" height="547">
+
+For the set-up, I plugged 3 of the double-sided wires into the port from the capacitive moisture sensor. Then, I plugged the left wire into A0 (black wire), the middle one (grey wire) into gnd, and the right one (white wire) into 5V.
+
+<img src="Screenshot 2023-07-31 184536.png" width="464" height="664">
+
+<img src="Screenshot 2023-07-16 212008.png" width="455" height="574">
+
+To program this device, I used an arduino code in the "Sparkfun" website.
+
+<pre style="border-style: solid;background-color:lightpink; width: 55%"><code>
+  \\/*  Soil Moisture Basic Example
+  This sketch was written by SparkFun Electronics
+  Joel Bartlett 
+  August 31, 2015
+
+  Basic skecth to print out soil moisture values to the Serial Monitor 
+
+  Released under the MIT License(http://opensource.org/licenses/MIT)
+*/
+
+int val = 0; //value for storing moisture value 
+int soilPin = A0;//Declare a variable for the soil moisture sensor 
+int soilPower = 7;//Variable for Soil moisture Power
+
+//Rather than powering the sensor through the 3.3V or 5V pins, 
+//we'll use a digital pin to power the sensor. This will 
+//prevent corrosion of the sensor as it sits in the soil. 
+
+void setup() 
+{
+Serial.begin(9600);   // open serial over USB
+
+pinMode(soilPower, OUTPUT);//Set D7 as an OUTPUT
+digitalWrite(soilPower, LOW);//Set to LOW so no power is flowing through the sensor
+}
+
+void loop() 
+{
+Serial.print("Soil Moisture = ");    
+//get soil moisture value from the function below and print it
+Serial.println(readSoil());
+
+//This 1 second timefrme is used so you can test the sensor and see it change in real-time.
+//For in-plant applications, you will want to take readings much less frequently.
+delay(1000);//take a reading every second
+}
+//This is a function used to get the soil moisture content
+int readSoil()
+{
+
+  digitalWrite(soilPower, HIGH);//turn D7 "On"
+  delay(10);//wait 10 milliseconds 
+  val = analogRead(soilPin);//Read the SIG value form sensor 
+  digitalWrite(soilPower, LOW);//turn D7 "Off"
+  return val;//send current moisture valueb  
+}
+
+</code></pre>
+
+Once the capacitive moisture sensor was running, I placed it in three soil samples: dry soil, mild/wet soil, and very moist soil (muddy soil). 
+
+<img src="Screenshot 2023-07-31 192627.png" width="1056" height="639">
+
+<img src="Screenshot 2023-07-31 192644.png" width="339" height="369"> <img src="Screenshot 2023-07-31 192635.png" width="383" height="369"> <img src="Screenshot 2023-07-31 192639.png" width="326" height="369">
+
+Of course, each sample had a different moisture level. However, I found that the difference between the levels were only correct if the dirt was placed directly onto the gadget and lifted closer into the air. By allowing the soil to be closer to the air, it lowers the chances of accurate results interfering with the sensor signal.
+
+Here are the results!
+
+<img src="Screenshot 2023-07-31 171831.png" width="862" height="169">
+
+</xmp>
+</body>
+
+<script src="../strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+</html>
