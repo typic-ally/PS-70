@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>PS70: Intro to Digital Fabrication </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../style.css" rel="stylesheet">
+
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div style="align-items: left; justify-content:left;" class="container-fluid">
+    <h3 class="nav-title"> PS70: Intro to Digital Fabrication</h3>
+    <div class="navbar-nav">
+      <h4></h4>
+      <h4><a class="nav-link" href="../index.html">Home</a></h4>
+      <h4><a class="nav-link" href="../about.html">About</a></h4>
+    </div>
+  </div>
+</nav>
+
+<body>
+
+
+<xmp style="display:none;">
+<br> 
+
+#### Final Project
+By: Allison Fairman
+
+For my Final Project, I created a machine that can determine the moisture level of a plant's soil and distribute the necessary amount of water. 
+
+To build this project, I used:
+
+- A Waterpump
+- Capacitive soil sensor
+- Empty spray-bottle container
+- Extra tubes
+- Plywood (5 lasercut pieces)
+- Socket-Socket wires (Double socket)
+- Double-sided wires
+- Socket-wire (One socket)
+- 3 mini breadboards
+- Arduino board & cord
+- Programmable push-button
+- 2 Oled display screens (SSD1306 I2C Oled display)
+- LED strip
+
+I scaled measured it using the UCP software's top and left measurement feature. It's better to scale it in the Rhino software, while also making sure the width and height are at least 24cm or more.
+
+  The lasercut STL file is available below:
+**Note: Be sure to 3D print the first square twice to produce the 5th piece**
+STL file: <a download href='./plant watering project.dxf'> Project Design </a>
+
+
+The arduino code I used for the waterpump is the same code and followed the same steps that are used for the L9110 motor. For the capacitive sensor, I used the arduino code provived on the Sparkfun website (provided below)
+
+Arduino code for the entire project: 
+
+<pre style="border-style: solid; width: 55%"><code>
+ /*  Soil Moisture Basic Example
+    This sketch was written by SparkFun Electronics
+    Joel Bartlett 
+    August 31, 2015
+
+    Basic skecth to print out soil moisture values to the Serial Monitor 
+
+   Released under the MIT License(http://opensource.org/licenses/MIT)
+*/
+#include <Wire.h>
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_NeoPixel.h>
+
+#define LED_PIN    6
+
+// How many NeoPixels are attached to the Arduino?
+#define LED_COUNT 44
+
+// Declare our NeoPixel strip object:
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+
+Adafruit_SSD1306 display_top(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+Adafruit_SSD1306 display_bottom(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+int val = 0; //value for storing moisture value 
+int soilPin = A0;//Declare a variable for the soil moisture sensor 
+int soilPower = 7;//Variable for Soil moisture Power
+int soilReading;
+
+
+const int A1A = 3;  // define pin 3 for A-1A 
+const int A1B = 4;  // define pin 4 for A-1B 
+
+int buttonPin = 5;
+int buttonState;
+
+//Rather than powering the sensor through the 3.3V or 5V pins, 
+//we'll use a digital pin to power the sensor. This will 
+//prevent corrosion of the sensor as it sits in the soil. 
+
+void setup() 
+{
+ //Serial.begin(115200);
+ display_top.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Default OLED address, usually
+  display_bottom.begin(SSD1306_SWITCHCAPVCC, 0x3D); // Second OLED address, via onboard jumper
+  
+ strip.begin();
+  strip.show(); // Initialize all pixels to 'off'
+
+  pinMode(A1A, OUTPUT);     // specify these pins as outputs
+  pinMode(A1B, OUTPUT);
+  digitalWrite(A1A, LOW);   // start with the motors off 
+  digitalWrite(A1B, LOW);
+
+  pinMode(buttonPin, INPUT_PULLUP);
+  buttonState = HIGH;
+
+  pinMode(soilPower, OUTPUT);//Set D7 as an OUTPUT
+  digitalWrite(soilPower, LOW);//Set to LOW so no power is flowing through the sensor
+// Show initial display buffer contents on the screen --
+  // the library initializes this with an Adafruit splash screen.
+
+  display_top.clearDisplay();
+  display_top.setTextSize(2); 
+  display_top.setTextColor(WHITE);
+  display_top.setCursor(0,10);
+  display_top.setRotation(2); 
+  display_top.print("Welcome to");
+  display_top.display();
+  
+  display_bottom.clearDisplay();
+  display_bottom.setTextSize(2); 
+  display_bottom.setTextColor(WHITE);
+  display_bottom.setCursor(20,10);
+  display_bottom.print("Plant A");
+  display_bottom.display();
+
+
+}
+
+void loop() 
+{
+//Serial.print("Soil Moisture = ");    
+//get soil moisture value from the function below and print it
+  // // start the motor 
+ 
+//This 1 second timefrme is used so you can test the sensor and see it change in real-time.
+//For in-plant applications, you will want to take readings much less frequently.
+//delay(1000);//take a reading every second
+  buttonState = digitalRead(buttonPin);
+ // Serial.println(buttonState);
+  
+ //Serial.println(readSoil());
+  if(buttonState == LOW){
+   colorWipe(strip.Color(127,127,127), 50); // White
+    soilReading = readSoil();
+    //Serial.println(soilReading);
+    if(soilReading > 690){
+      //Serial.println("Reading Air");
+      display_top.clearDisplay();
+      display_top.setTextSize(1); 
+      display_top.setTextColor(WHITE);
+      display_top.setCursor(30,10);
+      display_top.setRotation(2); 
+      display_top.println("Dispensing: ");
+      display_top.setCursor(60,20);
+      display_top.println("-");
+      display_top.display();
+
+      display_bottom.clearDisplay();
+      display_bottom.setTextSize(1.5); 
+      display_bottom.setTextColor(WHITE);
+      display_bottom.setCursor(30,10);
+      display_bottom.println("Place Sensor");
+       display_bottom.setCursor(40,20);
+      display_bottom.println("in Plant");
+      display_bottom.display();
+    }else if(soilReading<=510 && soilReading>496){
+      display_top.clearDisplay();
+      display_top.setTextSize(1.5); 
+      display_top.setTextColor(WHITE);
+      display_top.setCursor(30,10);
+      display_top.setRotation(2); 
+      display_top.println("Dispensing: ");
+      display_top.setCursor(50,20);
+      display_top.println("30mL");
+      display_top.display();
+
+      display_bottom.clearDisplay();
+      display_bottom.setTextSize(1.5); 
+      display_bottom.setTextColor(WHITE);
+      display_bottom.setCursor(30,10);
+      display_bottom.print("Very Dry Soil");
+      display_bottom.display();
+
+      //30mL
+      //Serial.println("Reading Dry Soil");
+      digitalWrite(A1A, HIGH);   
+      digitalWrite(A1B, LOW);
+      delay(20000);  
+      digitalWrite(A1A, LOW);   
+      digitalWrite(A1B, LOW);
+      delay(5000);
+
+      
+    }else if(soilReading<=496 && soilReading>388){
+      //10mL
+      //Serial.println("Reading Semi Moist Soil");
+
+      display_top.clearDisplay();
+      display_top.setTextSize(1.5); 
+      display_top.setTextColor(WHITE);
+      display_top.setCursor(30,10);
+      display_top.setRotation(2); 
+      display_top.println("Dispensing: ");
+      display_top.setCursor(50,20);
+      display_top.println("10 mL");
+      display_top.display();
+
+      display_bottom.clearDisplay();
+      display_bottom.setTextSize(1.5); 
+      display_bottom.setTextColor(WHITE);
+      display_bottom.setCursor(20,10);
+      display_bottom.print("Semi Moist Soil");
+      display_bottom.display();
+
+      //Dispense Water
+      digitalWrite(A1A, HIGH);   
+      digitalWrite(A1B, LOW);
+      delay(6666);  
+      digitalWrite(A1A, LOW);   
+      digitalWrite(A1B, LOW);
+      delay(5000);
+
+      
+    }else if(soilReading<=388){
+      //no water needed
+     // Serial.println("Reading Very Moist Soil");
+
+      display_top.clearDisplay();
+      display_top.setTextSize(1.5); 
+      display_top.setTextColor(WHITE);
+      display_top.setCursor(30,10);
+      display_top.setRotation(2); 
+      display_top.println("Dispensing: ");
+      display_top.setCursor(50,20);
+      display_top.println("0mL");
+      display_top.display();
+
+      display_bottom.clearDisplay();
+      display_bottom.setTextSize(1.5); 
+      display_bottom.setTextColor(WHITE);
+      display_bottom.setCursor(20,10);
+      display_bottom.print("No Water Needed");
+      display_bottom.display();
+    }
+    delay(1000);
+  } 
+
+}
+//This is a function used to get the soil moisture content
+int readSoil()
+{
+
+  //  digitalWrite(soilPower, HIGH);//turn D7 "On"
+    //delay(10);//wait 10 milliseconds 
+    val = analogRead(soilPin);//Read the SIG value form sensor 
+    ///digitalWrite(soilPower, LOW);//turn D7 "Off"
+    return val;//send current moisture valueb  
+}
+
+void colorWipe(uint32_t color, int wait) {
+  for(int i=0; i<strip.numPixels(); i++) {   For each pixel in strip...
+    strip.setPixelColor(i, color);           Set pixel's color (in RAM)
+    strip.show();                            Update strip to match
+    delay(wait);                             Pause for a moment
+  }
+}
+</code> </pre> 
+Sparkfun website: <a href='Soil Moisture Sensor Hookup Guide - SparkFun Learn.html'> Moisture Sensor </a>
+
+The process begins with three soil samples: dry dirt, semi-wet soil, and extremely damp soil (muddy). The moisture levels ranged from greatest to lowest (dryest to moistest). The capacitive sensor read 500-490 for dry soil, 380 for semi-wet soil, and 248-210 for extremely moist soil for each soil sample. My design consists of a simple box with a screen opening and a small rectangle for the screen placement (128 mm width and 55 mm height). Then I placed the pieces together with wood glue until they formed a box shape. I used screws to secure the Arduino board and breadboard inside the box. 
+
+<img src="Screenshot 2023-07-31 192627.png" width="1155" height="655">
+
+Here's the final project!
+
+<video width="720" height="520" controls>
+<source src="The Plant A Project.mp4" type="video/mp4">
+</video>
+
+</xmp>
+</body>
+
+<script src="../strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+</html>

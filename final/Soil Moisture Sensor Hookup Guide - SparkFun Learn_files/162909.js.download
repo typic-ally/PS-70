@@ -1,0 +1,43 @@
+// find this script
+var target_script;
+var scripts = document.getElementsByTagName('script');
+for (var i=0; i<scripts.length; i++) {
+  if (scripts[i].src == 'https://www.sparkfun.com/wish_lists/162909.js') {
+    target_script = scripts[i];
+    break;
+  }
+}
+var target_parent = target_script.parentNode;
+
+// css
+var styles = document.createElement('link');
+styles.rel = 'stylesheet';
+styles.type = 'text/css';
+styles.href = 'https://www.sparkfun.com/css/embed/wish_list.css';
+target_parent.insertBefore(styles, target_script);
+
+// wrapper for innerHTML
+var wrapper = document.createElement('div');
+
+var html = '<div id="wish-list-162909" class="sfe-wish-list">';
+
+html += '<div class="sfe-title"><a href="https://www.sparkfun.com/wish_lists/162909"><strong>Soil Moisture Sensor Wish List</strong> <span class="sfewl">SparkFun Wish List</span></a>';
+
+// only show add to cart if on sparkfun.com
+if (document.domain.match(/sparkfun\.com/)) {
+  html += '<form action="https://www.sparkfun.com/wish_lists/162909/dump" method="post"><input type=submit value="Add all to cart" class="btn btn-default" /></form>';
+}
+
+html += '</div>';
+
+html += '<div class="sfe-inner"><div class="sfe-row"><a href="https://www.sparkfun.com/products/17259"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/1/6/2/4/6/17259-Flexible_Qwiic_Cable_-_100mm-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">Flexible Qwiic Cable - 100mm <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> PRT-17259</span></span><span class="sfe-description"></span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/17731"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/1/6/8/4/8/17731-SparkFun_Qwiic_Soil_Moisture_Sensor-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">SparkFun Qwiic Soil Moisture Sensor <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> SEN-17731</span></span><span class="sfe-description">The SparkFun Soil Moisture Sensor is a simple breakout for measuring the moisture in soil and similar materials. The soil moisture sensor is pretty st&hellip;</span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/12002"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/8/5/0/3/12002-Breadboard_-_Self-Adhesive__White_-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">Breadboard - Self-Adhesive (White) <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> PRT-12002</span></span><span class="sfe-description">This is your tried and true white solderless breadboard. It has 2 power buses, 10 columns, and 30 rows - a total of 400 tie in points. All pins are sp&hellip;</span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/11301"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/6/9/8/0/11301-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">SparkFun USB Mini-B Cable - 6 Foot <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> CAB-11301</span></span><span class="sfe-description">This is a USB 2.0 type A to Mini-B 5-pin cable. You know, the mini-B connector that usually comes with USB Hubs, Cameras, MP3 players, etc. You can us&hellip;</span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/11026"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/3/7/0/4/11026-Jumper_Wires_Standard_7in._M_M_-_30_AWG__30_Pack_-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">Jumper Wires Standard 7&quot; M/M - 30 AWG (30 Pack) <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> PRT-11026</span></span><span class="sfe-description">If you need to knock up a quick prototype there\'s nothing like having a pile of jumper wires to speed things up, and let\'s face it: sometimes you want&hellip;</span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/13322"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/1/0/6/1/0/13322-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">SparkFun Soil Moisture Sensor <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> SEN-13322</span></span><span class="sfe-description">The SparkFun Soil Moisture Sensor is a simple breakout for measuring the moisture in soil and similar materials. The soil moisture sensor is pretty st&hellip;</span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/10218"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/4/5/6/2/10218-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">9V Alkaline Battery <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> PRT-10218</span></span><span class="sfe-description">These are your standard 9 Volt alkaline batteries from Rayovac. Don\'t even think about trying to recharge these. Use them with Arduinos or with a volt&hellip;</span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/10512"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/5/0/6/2/10512-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">9V Battery Holder <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> PRT-10512</span></span><span class="sfe-description">This 9V battery holder allows your battery to snap in tight and holds it in place, which is great in situations where you don\'t want the battery just &hellip;</span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/9395"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/2/9/9/8/09395_action-01.jpg" /><span class="sfe-text"><span class="sfe-item-title">Serial Enabled 16x2 LCD - White on Black 5V <span class="sfe-sku"><span class="sfe-stock sfe-stock-limited" title="<?= $quantity ?> available"></span> LCD-09395</span></span><span class="sfe-description">This is the latest evolution of our serial LCD. Included on a single board is a 16x2 LCD and an embedded circuit based around a PIC 16F88. The on-boar&hellip;</span></span></a></div><div class="sfe-row"><a href="https://www.sparkfun.com/products/15123"><img width="58" height="58" class="sfe-thumbnail" src="https://cdn.sparkfun.com/r/58-58/assets/parts/1/3/4/9/2/15123-SparkFun_RedBoard_Qwiic-01a.jpg" /><span class="sfe-text"><span class="sfe-item-title">SparkFun RedBoard Qwiic <span class="sfe-sku"><span class="sfe-stock sfe-stock-in" title="in stock"></span> DEV-15123</span></span><span class="sfe-description"></span></span></a></div>';
+
+html += '<div class="sfe-footer"><a class="button" href="https://www.sparkfun.com/wish_lists/162909">View <strong>Soil Moisture Sensor Wish List</strong> on SparkFun.com</a></div>';
+
+html += '</div>'; // end .sfe-inner
+
+html += '</div>'; // end .sfe-wish-list
+
+wrapper.innerHTML = html;
+
+target_parent.insertBefore(wrapper, target_script);
